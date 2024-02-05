@@ -3,10 +3,12 @@ class SectionCard extends HTMLElement {
     super();
     this.painted = false;
     this.shadow = this.attachShadow({ mode: "open" });
-    this.title = this.getAttribute("title") ?? "Last known location:";
-    this.name = this.getAttribute("name") ?? "Snake Planet";
+    this.sectionTitle = this.getAttribute("sectiontitle") ?? "";
+    this.sectionName = this.getAttribute("sectionname") ?? "";
   }
   connectedCallback() {
+    this.painted = true;
+    console.log("Componente sectionCard renderizado");
     const containerStyles = document.createElement("style");
     const styles = `
           .section {
@@ -34,16 +36,14 @@ class SectionCard extends HTMLElement {
     //?Location (second section)
     const titleElement = document.createElement("span");
     titleElement.id = "title";
-    titleElement.innerHTML = this.title;
+    titleElement.innerHTML = this.getAttribute("sectiontitle");
     const nameElement = document.createElement("span");
     nameElement.id = "name";
-    nameElement.innerHTML = this.name;
+    nameElement.innerHTML = this.getAttribute("sectionName");
     section.appendChild(containerStyles);
     section.appendChild(titleElement);
     section.appendChild(nameElement);
     this.shadow.appendChild(section);
-    this.painted = true;
-    console.log("Componente sectionCard renderizado");
   }
 
   disconnectedCallback() {
@@ -51,19 +51,19 @@ class SectionCard extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldName, newName) {
-    if (this.painted && name === "title" && oldName !== newName) {
-      this.title = newName;
+    if (this.painted && name === "sectiontitle" && oldName !== newName) {
+      this.sectionTitle = newName;
       const customTitle = this.shadow.getElementById("title");
       console.log(customTitle);
-      customTitle.innerHTML = this.title;
+      customTitle.innerHTML = this.sectionTitle;
       console.log(
         `El atributo con nombre ${name} cambio de ${oldName} a ${newName}`
       );
     }
-    if (this.painted && name === "name" && oldName !== newName) {
-      this.name = newName;
+    if (this.painted && name === "sectionname" && oldName !== newName) {
+      this.sectionName = newName;
       const customTitle = this.shadow.getElementById("name");
-      customTitle.innerHTML = this.name;
+      customTitle.innerHTML = this.sectionName;
       console.log(
         `El atributo con nombre ${name} cambio de ${oldName} a ${newName}`
       );
@@ -71,7 +71,7 @@ class SectionCard extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["name", "title"];
+    return ["sectiontitle", "sectionname"];
   }
 }
 

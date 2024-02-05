@@ -5,6 +5,7 @@ class CustomBody extends HTMLElement {
   }
 
   connectedCallback() {
+    console.log("Componente index renderizado");
     //get body
     const htmlBody = document.getElementsByTagName("body")[0];
     //ovveride body
@@ -41,8 +42,6 @@ class CustomBody extends HTMLElement {
     //!----------------------------------------------------------------
     divBody.appendChild(containerCards);
     this.shadow.appendChild(divBody);
-    this.painted = true;
-    console.log("Componente index renderizado");
   }
 }
 

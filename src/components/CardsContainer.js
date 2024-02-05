@@ -5,6 +5,7 @@ class CardsContainer extends HTMLElement {
   }
 
   connectedCallback() {
+    console.log("componente container renderizado");
     //styles
     const containerStyles = document.createElement("style");
     const customStyles = `
@@ -40,16 +41,22 @@ class CardsContainer extends HTMLElement {
     fetch("https://rickandmortyapi.com/api/character/?page=1")
       .then((res) => res.json())
       .then((resArr) => {
-        resArr.results.forEach((chracter) => {
-          const {name, status, species, image, location, episode} = chracter
+        const { results } = resArr;
+        results.forEach((chracter) => {
           const card = document.createElement("custom-card");
+          const { name, status, species, image, location, episode } = chracter;
+          card.setAttribute("imgsrc", image);
+          card.setAttribute("name", name);
+          card.setAttribute("status", status);
+          card.setAttribute("species", species);
+          card.setAttribute("location", location.name);
+          card.setAttribute("urlfirstepisode", episode[0]);
           cardsContainer.appendChild(card);
         });
-      });
-
+      })
+      .catch((error) => console.error(error.message));
     container.appendChild(cardsContainer);
     this.shadow.appendChild(container);
-    console.log("componente container renderizado");
   }
 }
 

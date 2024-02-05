@@ -6,6 +6,8 @@ class CustomHeader extends HTMLElement {
     this.painted = false;
   }
   connectedCallback() {
+    this.painted = true;
+    console.log("componente header renderizado");
     //styles
     const containerStyles = document.createElement("style");
     const styles = `
@@ -58,8 +60,6 @@ class CustomHeader extends HTMLElement {
     containerHeader.appendChild(slotContainer);
     this.shadow.appendChild(containerStyles);
     this.shadow.appendChild(containerHeader);
-    this.painted = true;
-    console.log("componente header renderizado");
   }
 
   disconnectedCallback() {

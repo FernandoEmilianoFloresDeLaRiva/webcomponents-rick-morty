@@ -3,15 +3,17 @@ class CustomCard extends HTMLElement {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
     this.painted = false;
-    this.imgSrc = this.getAttribute("imgSrc") ?? "https://rickandmortyapi.com/api/character/avatar/578.jpeg";
-    this.name = this.getAttribute("name") ?? "Snake Soldier";
-    this.status = this.getAttribute("status") ?? "alive";
-    this.species = "Human";
-    this.location = "Snake Planet";
-    this.urlFirstEpisode = "https://rickandmortyapi.com/api/character/20";
+    this.imgsrc = this.getAttribute("imgsrc") ?? "";
+    this.name = this.getAttribute("name") ?? "";
+    this.status = this.getAttribute("status") ?? "";
+    this.species = this.getAttribute("species") ?? "";
+    this.location = this.getAttribute("location") ?? "";
+    this.urlfirstepisode = this.getAttribute("urlfirstepisode") ?? "";
   }
 
   connectedCallback() {
+    this.painted = true;
+    console.log("componente card renderizado");
     //!styles----------------------------------------------------------------
     const containerStyles = document.createElement("style");
     const styles = `
@@ -114,8 +116,8 @@ class CustomCard extends HTMLElement {
     const pictureContainer = document.createElement("div");
     pictureContainer.className = "container-img";
     const picture = document.createElement("img");
-    picture.src = this.imgSrc;
-    picture.alt = this.name;
+    picture.src = this.getAttribute("imgsrc");
+    picture.alt = this.getAttribute("name");
     picture.id = "srcImg";
     pictureContainer.appendChild(picture);
     containerCard.appendChild(pictureContainer);
@@ -127,18 +129,22 @@ class CustomCard extends HTMLElement {
     firstSection.className = "section";
     //?title first section---------------------------------------------------
     const titleCard = document.createElement("h2");
-    titleCard.innerHTML = this.name;
+    titleCard.innerHTML = this.getAttribute("name");
     titleCard.id = "titleId";
     firstSection.appendChild(titleCard);
     //?status (first section)
     const containerStatus = document.createElement("span");
     containerStatus.className = "container-status";
     const status = document.createElement("span");
-    status.className = `status ${this.status === "alive" ? "alive" : "dead"}`;
+    status.className = `status ${
+      this.getAttribute("status") === "alive" ? "alive" : "dead"
+    }`;
     containerStatus.appendChild(status);
     const statusText = document.createElement("span");
     statusText.id = "statusTextId";
-    statusText.innerHTML = `${this.status} - ${this.species}`;
+    statusText.innerHTML = `${this.getAttribute(
+      "status"
+    )} - ${this.getAttribute("species")}`;
     containerStatus.appendChild(statusText);
     firstSection.appendChild(containerStatus);
 
@@ -147,25 +153,23 @@ class CustomCard extends HTMLElement {
     //?Card data second section------------------------------------------------
     const secondSection = document.createElement("section-card");
     secondSection.className = "section";
-    secondSection.setAttribute("title", "Last known location:");
-    secondSection.setAttribute("name", this.location);
+    secondSection.setAttribute("sectiontitle", "Last known location:");
+    secondSection.setAttribute("sectionname", this.getAttribute("location"));
     containerData.appendChild(secondSection);
 
     //?Card data third section------------------------------------------------
     const thirdSection = document.createElement("section-card");
     thirdSection.className = "section";
-    thirdSection.setAttribute("title", "First seen in:");
-    fetch(this.urlFirstEpisode)
+    thirdSection.setAttribute("sectiontitle", "First seen in:");
+    fetch(this.getAttribute("urlfirstepisode"))
       .then((res) => res.json())
       .then((secondRes) => {
-        thirdSection.setAttribute("name", secondRes.name);
+        thirdSection.setAttribute("sectionname", secondRes.name);
       });
     containerData.appendChild(thirdSection);
     //?-----------------------------------------------------------------------
     containerCard.appendChild(containerData);
     this.shadow.appendChild(containerCard);
-    this.painted = true;
-    console.log("componente card renderizado");
   }
 
   disconnectedCallback() {
@@ -174,8 +178,8 @@ class CustomCard extends HTMLElement {
 
   attributeChangedCallback(name, oldName, newName) {
     //imgSrc--------------------------------------------------------
-    if (this.painted && name === "imgSrc" && oldName !== newName) {
-      this.imgSrc = newName;
+    if (this.painted && name === "imgsrc" && oldName !== newName) {
+      this.imgsrc = newName;
       const customImg = this.shadow.getElementById("srcImg");
       customImg.src = this.imgSrc;
       console.log(
@@ -219,8 +223,8 @@ class CustomCard extends HTMLElement {
       );
     }
     //urlFirstEpisode----------------------------------------------------------
-    if (this.painted && name === "urlFirstEpisode" && oldName !== newName) {
-      this.urlFirstEpisode = newName;
+    if (this.painted && name === "urlfirstepisode" && oldName !== newName) {
+      this.urlfirstepisode = newName;
       console.log(
         `El atributo con nombre ${name} cambio de ${oldName} a ${newName}`
       );
@@ -229,12 +233,12 @@ class CustomCard extends HTMLElement {
 
   static get observedAttributes() {
     return [
-      "imgSrc",
       "name",
       "status",
       "species",
+      "imgsrc",
       "location",
-      "urlFirstEpisode",
+      "urlfirstepisode",
     ];
   }
 }
