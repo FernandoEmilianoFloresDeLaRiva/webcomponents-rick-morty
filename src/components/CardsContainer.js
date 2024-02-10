@@ -1,4 +1,4 @@
-class CardsContainer extends HTMLElement {
+export class CardsContainer extends HTMLElement {
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
@@ -59,5 +59,3 @@ class CardsContainer extends HTMLElement {
     this.shadow.appendChild(container);
   }
 }
-
-window.customElements.define("cards-container", CardsContainer);

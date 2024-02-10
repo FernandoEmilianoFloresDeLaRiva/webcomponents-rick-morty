@@ -1,4 +1,4 @@
-class CustomCard extends HTMLElement {
+export class CustomCard extends HTMLElement {
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
@@ -242,5 +242,3 @@ class CustomCard extends HTMLElement {
     ];
   }
 }
-
-window.customElements.define("custom-card", CustomCard);

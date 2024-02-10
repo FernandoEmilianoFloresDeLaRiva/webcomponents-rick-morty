@@ -1,4 +1,4 @@
-class CustomHeader extends HTMLElement {
+export class CustomHeader extends HTMLElement {
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
@@ -82,4 +82,4 @@ class CustomHeader extends HTMLElement {
   }
 }
 
-window.customElements.define("custom-header", CustomHeader);
+//window.customElements.define("custom-header", CustomHeader);

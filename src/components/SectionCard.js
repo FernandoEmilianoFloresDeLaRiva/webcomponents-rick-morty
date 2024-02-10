@@ -1,4 +1,4 @@
-class SectionCard extends HTMLElement {
+export class SectionCard extends HTMLElement {
   constructor() {
     super();
     this.painted = false;
@@ -74,5 +74,3 @@ class SectionCard extends HTMLElement {
     return ["sectiontitle", "sectionname"];
   }
 }
-
-window.customElements.define("section-card", SectionCard);

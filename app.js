@@ -1,4 +1,4 @@
-class CustomBody extends HTMLElement {
+export class CustomBody extends HTMLElement {
   constructor() {
     super();
     this.shadow = this.attachShadow({ mode: "open" });
@@ -45,4 +45,4 @@ class CustomBody extends HTMLElement {
   }
 }
 
-window.customElements.define("custom-body", CustomBody);
+
