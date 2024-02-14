@@ -6,10 +6,8 @@ export class CustomBody extends HTMLElement {
 
   connectedCallback() {
     console.log("Componente index renderizado");
-    //get body
-    const htmlBody = document.getElementsByTagName("body")[0];
     //ovveride body
-    htmlBody.style =
+    document.body.style =
       "margin: 0; padding: 0; font-family: -apple-system,'BlinkMacSystemFont','Segoe UI','Roboto','Helvetica','Arial',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol';";
     //create main container
     const divBody = document.createElement("div");
